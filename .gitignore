@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Generated / large binary outputs
+assets/processed_pngs/
+assets/processed_npz/
+assets/sweep_results/
+
+# Akrometrix data files and Gerbers (raw input data — keep locally)
+assets/AkroFiles/
+assets/gerbers/
+assets/gerbv/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp

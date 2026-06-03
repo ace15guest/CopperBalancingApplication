@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Asa Guest/Documents/Projects/CopperBalancingFinal/Assets/**)",
+      "Bash(Select-Object FullName)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\Asa Guest\\\\Documents\\\\Projects\\\\CopperBalancingFinal\\\\Assets\" -Recurse | ForEach-Object { $_.FullName })",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\Asa Guest\\\\Documents\\\\Projects\\\\CopperBalancingFinal\\\\Assets\\\\gerbv\" | ForEach-Object { $_.FullName })",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\Asa Guest\\\\Documents\\\\Projects\\\\CopperBalancingApplication\\\\assets\\\\gerbv\")",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\Asa Guest\\\\Documents\\\\Projects\\\\CopperBalancingApplication\\\\assets\\\\processed_pngs\")",
+      "PowerShell(Rename-Item -Path \"C:\\\\Users\\\\Asa Guest\\\\Documents\\\\Projects\\\\CopperBalancingApplication\\\\core\" -NewName \"src\")",
+      "Bash(.venv/Scripts/python -c ' *)",
+      "Bash(.venv/Scripts/python -m src.simulation.validation)",
+      "Bash(python -c ' *)",
+      "Bash(.venv\\\\Scripts\\\\pip install *)"
+    ]
+  }
+}
