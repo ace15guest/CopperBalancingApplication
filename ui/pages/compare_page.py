@@ -259,7 +259,7 @@ class ComparePage(QWidget):
     # ------------------------------------------------------------------
 
     _DEFAULT_DAT_DIR = (
-        r"C:\Users\Asa Guest\Documents\Projects\CopperBalancingApplication\assets\AkroFiles\TopDatFiles\ACCL-890K\Q1\ACCL-890K-01-Q1_Top_Global.dat"
+        r"C:\Users\Asa Guest\Documents\Projects\CopperBalancingApplication\assets\AkroFiles\TopDatFiles\ACCL-EM890K\Q1\ACCL-890K-01-Q1_Top_Global.dat"
     )
 
     def _browse(self) -> None:

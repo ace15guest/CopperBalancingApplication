@@ -1,0 +1,644 @@
+{
+  "configs": [
+    {
+      "name": "ACCL-EM890K_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\ACCL-EM890K\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q1.json"
+    },
+    {
+      "name": "ACCL-EM890K_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\ACCL-EM890K\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q2.json"
+    },
+    {
+      "name": "ACCL-EM890K_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\ACCL-EM890K\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q3.json"
+    },
+    {
+      "name": "ACCL-EM890K_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\ACCL-EM890K\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q4.json"
+    },
+    {
+      "name": "ACCL-M1_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\ACCL-M1\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M1_StackUp_Q1.json"
+    },
+    {
+      "name": "ACCL-M1_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\ACCL-M1\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M1_StackUp_Q2.json"
+    },
+    {
+      "name": "ACCL-M1_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\ACCL-M1\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M1_StackUp_Q3.json"
+    },
+    {
+      "name": "ACCL-M1_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\ACCL-M1\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M1_StackUp_Q4.json"
+    },
+    {
+      "name": "AKM-EM528_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\AKM-EM528\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q1.json"
+    },
+    {
+      "name": "AKM-EM528_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\AKM-EM528\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q2.json"
+    },
+    {
+      "name": "AKM-EM528_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\AKM-EM528\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q3.json"
+    },
+    {
+      "name": "AKM-EM528_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\AKM-EM528\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q4.json"
+    },
+    {
+      "name": "AKM-EM890K_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\AKM-EM890K\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q1.json"
+    },
+    {
+      "name": "AKM-EM890K_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\AKM-EM890K\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q2.json"
+    },
+    {
+      "name": "AKM-EM890K_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\AKM-EM890K\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q3.json"
+    },
+    {
+      "name": "AKM-EM890K_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\AKM-EM890K\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q4.json"
+    },
+    {
+      "name": "DMC-IT988_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\DMC-IT988\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q1.json"
+    },
+    {
+      "name": "DMC-IT988_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\DMC-IT988\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q2.json"
+    },
+    {
+      "name": "DMC-IT988_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\DMC-IT988\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q3.json"
+    },
+    {
+      "name": "DMC-IT988_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\DMC-IT988\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q4.json"
+    },
+    {
+      "name": "DMC-TU883_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\DMC-TU883\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q1.json"
+    },
+    {
+      "name": "DMC-TU883_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\DMC-TU883\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q2.json"
+    },
+    {
+      "name": "DMC-TU883_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\DMC-TU883\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q3.json"
+    },
+    {
+      "name": "DMC-TU883_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\DMC-TU883\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q4.json"
+    },
+    {
+      "name": "FNDR-IT170_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\FNDR-IT170\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q1.json"
+    },
+    {
+      "name": "FNDR-IT170_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\FNDR-IT170\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q2.json"
+    },
+    {
+      "name": "FNDR-IT170_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\FNDR-IT170\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q3.json"
+    },
+    {
+      "name": "FNDR-IT170_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\FNDR-IT170\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q4.json"
+    },
+    {
+      "name": "FNDR-IT988_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\FNDR-IT988\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q1.json"
+    },
+    {
+      "name": "FNDR-IT988_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\FNDR-IT988\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q2.json"
+    },
+    {
+      "name": "FNDR-IT988_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\FNDR-IT988\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q3.json"
+    },
+    {
+      "name": "FNDR-IT988_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\FNDR-IT988\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q4.json"
+    },
+    {
+      "name": "SCC-IT170_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\SCC-IT170\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q1.json"
+    },
+    {
+      "name": "SCC-IT170_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\SCC-IT170\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q2.json"
+    },
+    {
+      "name": "SCC-IT170_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\SCC-IT170\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q3.json"
+    },
+    {
+      "name": "SCC-IT170_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\SCC-IT170\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q4.json"
+    },
+    {
+      "name": "SCC-IT988_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\SCC-IT988\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q1.json"
+    },
+    {
+      "name": "SCC-IT988_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\SCC-IT988\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q2.json"
+    },
+    {
+      "name": "SCC-IT988_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\SCC-IT988\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q3.json"
+    },
+    {
+      "name": "SCC-IT988_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\SCC-IT988\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q4.json"
+    },
+    {
+      "name": "TTM-M8000_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\TTM-M8000\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M8000_StackUp_Q1.json"
+    },
+    {
+      "name": "TTM-M8000_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\TTM-M8000\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M8000_StackUp_Q2.json"
+    },
+    {
+      "name": "TTM-M8000_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\TTM-M8000\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M8000_StackUp_Q3.json"
+    },
+    {
+      "name": "TTM-M8000_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\TTM-M8000\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M8000_StackUp_Q4.json"
+    },
+    {
+      "name": "TTM-N4000-13_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\TTM-N4000-13\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_N4000-13_StackUp_Q1.json"
+    },
+    {
+      "name": "TTM-N4000-13_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\TTM-N4000-13\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_N4000-13_StackUp_Q2.json"
+    },
+    {
+      "name": "TTM-N4000-13_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\TTM-N4000-13\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_N4000-13_StackUp_Q3.json"
+    },
+    {
+      "name": "TTM-N4000-13_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\TTM-N4000-13\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_N4000-13_StackUp_Q4.json"
+    },
+    {
+      "name": "VGT-EM528_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\VGT-EM528\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q1.json"
+    },
+    {
+      "name": "VGT-EM528_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\VGT-EM528\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q2.json"
+    },
+    {
+      "name": "VGT-EM528_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\VGT-EM528\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q3.json"
+    },
+    {
+      "name": "VGT-EM528_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\VGT-EM528\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q4.json"
+    },
+    {
+      "name": "VGT-EM890K_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\VGT-EM890K\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q1.json"
+    },
+    {
+      "name": "VGT-EM890K_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\VGT-EM890K\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q2.json"
+    },
+    {
+      "name": "VGT-EM890K_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\VGT-EM890K\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q3.json"
+    },
+    {
+      "name": "VGT-EM890K_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\VGT-EM890K\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q4.json"
+    },
+    {
+      "name": "WUS-IT988_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\WUS-IT988\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q1.json"
+    },
+    {
+      "name": "WUS-IT988_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\WUS-IT988\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q2.json"
+    },
+    {
+      "name": "WUS-IT988_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\WUS-IT988\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q3.json"
+    },
+    {
+      "name": "WUS-IT988_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\WUS-IT988\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q4.json"
+    },
+    {
+      "name": "WUS-TU883_Q1",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\WUS-TU883\\Q1",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q1.json"
+    },
+    {
+      "name": "WUS-TU883_Q2",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\WUS-TU883\\Q2",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q2.json"
+    },
+    {
+      "name": "WUS-TU883_Q3",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\WUS-TU883\\Q3",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q3.json"
+    },
+    {
+      "name": "WUS-TU883_Q4",
+      "akro_folder": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\TopDatFiles\\WUS-TU883\\Q4",
+      "stackup": "C:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q4.json"
+    },
+    {
+      "name": "ACCL-890K_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\ACCL-890K\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q1.json"
+    },
+    {
+      "name": "ACCL-890K_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\ACCL-890K\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q2.json"
+    },
+    {
+      "name": "ACCL-890K_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\ACCL-890K\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q3.json"
+    },
+    {
+      "name": "ACCL-890K_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\ACCL-890K\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q4.json"
+    },
+    {
+      "name": "ACCL-M1_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\ACCL-M1\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M1_StackUp_Q1.json"
+    },
+    {
+      "name": "ACCL-M1_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\ACCL-M1\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M1_StackUp_Q2.json"
+    },
+    {
+      "name": "ACCL-M1_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\ACCL-M1\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M1_StackUp_Q3.json"
+    },
+    {
+      "name": "ACCL-M1_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\ACCL-M1\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M1_StackUp_Q4.json"
+    },
+    {
+      "name": "AKM-528_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\AKM-528\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q1.json"
+    },
+    {
+      "name": "AKM-528_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\AKM-528\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q2.json"
+    },
+    {
+      "name": "AKM-528_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\AKM-528\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q3.json"
+    },
+    {
+      "name": "AKM-528_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\AKM-528\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q4.json"
+    },
+    {
+      "name": "AKM-890K_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\AKM-890K\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q1.json"
+    },
+    {
+      "name": "AKM-890K_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\AKM-890K\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q2.json"
+    },
+    {
+      "name": "AKM-890K_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\AKM-890K\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q3.json"
+    },
+    {
+      "name": "AKM-890K_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\AKM-890K\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q4.json"
+    },
+    {
+      "name": "DMC-IT988_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\DMC-IT988\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q1.json"
+    },
+    {
+      "name": "DMC-IT988_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\DMC-IT988\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q2.json"
+    },
+    {
+      "name": "DMC-IT988_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\DMC-IT988\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q3.json"
+    },
+    {
+      "name": "DMC-IT988_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\DMC-IT988\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q4.json"
+    },
+    {
+      "name": "DMC-TU883_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\DMC-TU883\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q1.json"
+    },
+    {
+      "name": "DMC-TU883_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\DMC-TU883\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q2.json"
+    },
+    {
+      "name": "DMC-TU883_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\DMC-TU883\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q3.json"
+    },
+    {
+      "name": "DMC-TU883_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\DMC-TU883\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q4.json"
+    },
+    {
+      "name": "FNDR-IT170_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\FNDR-IT170\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q1.json"
+    },
+    {
+      "name": "FNDR-IT170_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\FNDR-IT170\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q2.json"
+    },
+    {
+      "name": "FNDR-IT170_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\FNDR-IT170\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q3.json"
+    },
+    {
+      "name": "FNDR-IT170_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\FNDR-IT170\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q4.json"
+    },
+    {
+      "name": "FNDR-IT988_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\FNDR-IT988\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q1.json"
+    },
+    {
+      "name": "FNDR-IT988_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\FNDR-IT988\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q2.json"
+    },
+    {
+      "name": "FNDR-IT988_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\FNDR-IT988\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q3.json"
+    },
+    {
+      "name": "FNDR-IT988_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\FNDR-IT988\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q4.json"
+    },
+    {
+      "name": "SCC-988_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\SCC-988\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q1.json"
+    },
+    {
+      "name": "SCC-988_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\SCC-988\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q2.json"
+    },
+    {
+      "name": "SCC-988_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\SCC-988\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q3.json"
+    },
+    {
+      "name": "SCC-988_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\SCC-988\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q4.json"
+    },
+    {
+      "name": "SCC-IT170_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\SCC-IT170\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q1.json"
+    },
+    {
+      "name": "SCC-IT170_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\SCC-IT170\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q2.json"
+    },
+    {
+      "name": "SCC-IT170_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\SCC-IT170\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q3.json"
+    },
+    {
+      "name": "SCC-IT170_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\SCC-IT170\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT170_StackUp_Q4.json"
+    },
+    {
+      "name": "TTM-M8000_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\TTM-M8000\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M8000_StackUp_Q1.json"
+    },
+    {
+      "name": "TTM-M8000_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\TTM-M8000\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M8000_StackUp_Q2.json"
+    },
+    {
+      "name": "TTM-M8000_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\TTM-M8000\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M8000_StackUp_Q3.json"
+    },
+    {
+      "name": "TTM-M8000_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\TTM-M8000\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_M8000_StackUp_Q4.json"
+    },
+    {
+      "name": "TTM-N4000-13_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\TTM-N4000-13\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_N4000-13_StackUp_Q1.json"
+    },
+    {
+      "name": "TTM-N4000-13_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\TTM-N4000-13\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_N4000-13_StackUp_Q2.json"
+    },
+    {
+      "name": "TTM-N4000-13_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\TTM-N4000-13\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_N4000-13_StackUp_Q3.json"
+    },
+    {
+      "name": "TTM-N4000-13_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\TTM-N4000-13\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_N4000-13_StackUp_Q4.json"
+    },
+    {
+      "name": "VGT-EM528_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\VGT-EM528\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q1.json"
+    },
+    {
+      "name": "VGT-EM528_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\VGT-EM528\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q2.json"
+    },
+    {
+      "name": "VGT-EM528_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\VGT-EM528\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q3.json"
+    },
+    {
+      "name": "VGT-EM528_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\VGT-EM528\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM528_StackUp_Q4.json"
+    },
+    {
+      "name": "VGT-EM890K_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\VGT-EM890K\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q1.json"
+    },
+    {
+      "name": "VGT-EM890K_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\VGT-EM890K\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q2.json"
+    },
+    {
+      "name": "VGT-EM890K_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\VGT-EM890K\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q3.json"
+    },
+    {
+      "name": "VGT-EM890K_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\VGT-EM890K\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_EM890K_StackUp_Q4.json"
+    },
+    {
+      "name": "WUS-IT988_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\WUS-IT988\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q1.json"
+    },
+    {
+      "name": "WUS-IT988_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\WUS-IT988\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q2.json"
+    },
+    {
+      "name": "WUS-IT988_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\WUS-IT988\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q3.json"
+    },
+    {
+      "name": "WUS-IT988_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\WUS-IT988\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_IT988_StackUp_Q4.json"
+    },
+    {
+      "name": "WUS-TU883_Q1",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\WUS-TU883\\Q1",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q1.json"
+    },
+    {
+      "name": "WUS-TU883_Q2",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\WUS-TU883\\Q2",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q2.json"
+    },
+    {
+      "name": "WUS-TU883_Q3",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\WUS-TU883\\Q3",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q3.json"
+    },
+    {
+      "name": "WUS-TU883_Q4",
+      "akro_folder": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\AkroFiles\\BottomDatFiles\\WUS-TU883\\Q4",
+      "stackup": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\StackUps\\Cu_Balancing_TU883_StackUp_Q4.json"
+    }
+  ]
+}

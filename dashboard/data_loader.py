@@ -9,7 +9,7 @@ import pandas as pd
 class DataLoader:
     # Sweep identity / parameter columns
     PARAMETER_COLUMNS = [
-        "name", "location", "side", "material",
+        "name", "dat_file", "location", "side", "material",
         "dpi", "source", "blur_type", "sigma", "radius",
         "delta_t_c", "fill_missing", "denoise_sigma", "crop_fraction",
     ]
@@ -24,7 +24,7 @@ class DataLoader:
     ]
 
     NUMERIC_PARAMS = ["dpi", "sigma", "radius", "delta_t_c", "denoise_sigma", "crop_fraction"]
-    CATEGORICAL_PARAMS = ["name", "location", "side", "material", "source", "blur_type", "fill_missing"]
+    CATEGORICAL_PARAMS = ["name", "dat_file", "location", "side", "material", "source", "blur_type", "fill_missing"]
 
     def __init__(self, file_path: str):
         self.file_path = Path(file_path)

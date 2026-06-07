@@ -53,15 +53,56 @@
       ]
     },
     {
-      "name": "890K",
-      "notes": "Elite Material Co. EM890K halogen-free high-Tg laminate. Properties estimated from public EMC datasheets — verify before production use.",
+      "name": "EM890K",
+      "notes": "Elite Material Co. EM890K halogen-free high-Tg (200\u00b0C) laminate.",
       "materials": [
         {
-          "name": "890K",
-          "youngs_modulus_gpa": 22.0,
+          "name": "EM890K Core",
+          "youngs_modulus_gpa": 24.0,
           "poissons_ratio": 0.17,
-          "cte_xy_ppm_c": 12.0,
-          "cte_z_ppm_c": 38.0,
+          "cte_xy_ppm_c": 11.0,
+          "cte_z_ppm_c": 34.0,
+          "tg_c": 200,
+          "cure_shrinkage_linear_pct": 0.0
+        },
+        {
+          "name": "EM890K Prepreg",
+          "youngs_modulus_gpa": 19.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 13.5,
+          "cte_z_ppm_c": 44.0,
+          "tg_c": 200,
+          "cure_shrinkage_linear_pct": 0.15
+        },
+        {
+          "name": "Copper",
+          "youngs_modulus_gpa": 117.0,
+          "poissons_ratio": 0.35,
+          "cte_xy_ppm_c": 17.0,
+          "cte_z_ppm_c": 17.0,
+          "tg_c": null
+        }
+      ]
+    },
+    {
+      "name": "890K",
+      "notes": "Elite Material Co. EM890K halogen-free high-Tg (200\u00b0C) laminate.",
+      "materials": [
+        {
+          "name": "890K Core",
+          "youngs_modulus_gpa": 24.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 11.0,
+          "cte_z_ppm_c": 34.0,
+          "tg_c": 200,
+          "cure_shrinkage_linear_pct": 0.0
+        },
+        {
+          "name": "890K Prepreg",
+          "youngs_modulus_gpa": 19.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 13.5,
+          "cte_z_ppm_c": 44.0,
           "tg_c": 200,
           "cure_shrinkage_linear_pct": 0.15
         },
@@ -77,14 +118,23 @@
     },
     {
       "name": "M1",
-      "notes": "Assumed Panasonic Megtron 1 (R-1566W). Verify manufacturer and grade — 'M1' may refer to a different supplier's product.",
+      "notes": "Panasonic Megtron 1 (R-1566W) mid-Tg laminate.",
       "materials": [
         {
-          "name": "M1",
-          "youngs_modulus_gpa": 20.0,
+          "name": "M1 Core",
+          "youngs_modulus_gpa": 22.0,
           "poissons_ratio": 0.17,
-          "cte_xy_ppm_c": 14.0,
-          "cte_z_ppm_c": 50.0,
+          "cte_xy_ppm_c": 13.0,
+          "cte_z_ppm_c": 45.0,
+          "tg_c": 155,
+          "cure_shrinkage_linear_pct": 0.0
+        },
+        {
+          "name": "M1 Prepreg",
+          "youngs_modulus_gpa": 17.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 15.5,
+          "cte_z_ppm_c": 57.0,
           "tg_c": 155,
           "cure_shrinkage_linear_pct": 0.15
         },
@@ -100,7 +150,7 @@
     },
     {
       "name": "528",
-      "notes": "Assumed Isola FR528 mid-Tg laminate. Verify against Isola datasheet — Tg varies between DSC (~170°C) and TMA (~155°C) methods.",
+      "notes": "Assumed Isola FR528 mid-Tg laminate. Verify against Isola datasheet \u2014 Tg varies between DSC (~170\u00b0C) and TMA (~155\u00b0C) methods.",
       "materials": [
         {
           "name": "528",
@@ -122,15 +172,56 @@
       ]
     },
     {
-      "name": "IT988",
-      "notes": "ITEQ IT-988 halogen-free high-Tg laminate. Properties from public ITEQ datasheet.",
+      "name": "EM528",
+      "notes": "Elite Material Co. EM528 mid-Tg (~170\u00b0C) laminate (FR528-class).",
       "materials": [
         {
-          "name": "IT988",
-          "youngs_modulus_gpa": 23.0,
+          "name": "EM528 Core",
+          "youngs_modulus_gpa": 22.0,
           "poissons_ratio": 0.17,
-          "cte_xy_ppm_c": 13.0,
-          "cte_z_ppm_c": 38.0,
+          "cte_xy_ppm_c": 14.0,
+          "cte_z_ppm_c": 55.0,
+          "tg_c": 170,
+          "cure_shrinkage_linear_pct": 0.0
+        },
+        {
+          "name": "EM528 Prepreg",
+          "youngs_modulus_gpa": 17.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 16.5,
+          "cte_z_ppm_c": 67.0,
+          "tg_c": 170,
+          "cure_shrinkage_linear_pct": 0.15
+        },
+        {
+          "name": "Copper",
+          "youngs_modulus_gpa": 117.0,
+          "poissons_ratio": 0.35,
+          "cte_xy_ppm_c": 17.0,
+          "cte_z_ppm_c": 17.0,
+          "tg_c": null
+        }
+      ]
+    },
+    {
+      "name": "IT988",
+      "notes": "ITEQ IT-988 halogen-free high-Tg (200\u00b0C) laminate.",
+      "materials": [
+        {
+          "name": "IT988 Core",
+          "youngs_modulus_gpa": 25.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 12.0,
+          "cte_z_ppm_c": 34.0,
+          "tg_c": 200,
+          "cure_shrinkage_linear_pct": 0.0
+        },
+        {
+          "name": "IT988 Prepreg",
+          "youngs_modulus_gpa": 20.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 14.5,
+          "cte_z_ppm_c": 44.0,
           "tg_c": 200,
           "cure_shrinkage_linear_pct": 0.15
         },
@@ -146,14 +237,23 @@
     },
     {
       "name": "TU883",
-      "notes": "TUC TU-883 halogen-free high-Tg laminate. Properties estimated from public TUC datasheets.",
+      "notes": "TUC TU-883 halogen-free high-Tg (185\u00b0C) laminate.",
       "materials": [
         {
-          "name": "TU883",
-          "youngs_modulus_gpa": 22.0,
+          "name": "TU883 Core",
+          "youngs_modulus_gpa": 24.0,
           "poissons_ratio": 0.17,
-          "cte_xy_ppm_c": 13.0,
-          "cte_z_ppm_c": 42.0,
+          "cte_xy_ppm_c": 12.0,
+          "cte_z_ppm_c": 38.0,
+          "tg_c": 185,
+          "cure_shrinkage_linear_pct": 0.0
+        },
+        {
+          "name": "TU883 Prepreg",
+          "youngs_modulus_gpa": 19.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 14.5,
+          "cte_z_ppm_c": 48.0,
           "tg_c": 185,
           "cure_shrinkage_linear_pct": 0.15
         },
@@ -169,14 +269,23 @@
     },
     {
       "name": "IT170",
-      "notes": "ITEQ IT-170GS high-Tg laminate. Properties from public ITEQ datasheet.",
+      "notes": "ITEQ IT-170GS high-Tg (170\u00b0C) laminate.",
       "materials": [
         {
-          "name": "IT170",
-          "youngs_modulus_gpa": 22.0,
+          "name": "IT170 Core",
+          "youngs_modulus_gpa": 24.0,
           "poissons_ratio": 0.17,
-          "cte_xy_ppm_c": 14.0,
-          "cte_z_ppm_c": 50.0,
+          "cte_xy_ppm_c": 13.0,
+          "cte_z_ppm_c": 46.0,
+          "tg_c": 170,
+          "cure_shrinkage_linear_pct": 0.0
+        },
+        {
+          "name": "IT170 Prepreg",
+          "youngs_modulus_gpa": 19.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 15.5,
+          "cte_z_ppm_c": 56.0,
           "tg_c": 170,
           "cure_shrinkage_linear_pct": 0.15
         },
@@ -192,7 +301,7 @@
     },
     {
       "name": "988",
-      "notes": "Vendor unclear — '988' alone may refer to a different product than ITEQ IT-988 (e.g. Nanya NP-988 or Shengyi). Verify supplier and update properties accordingly.",
+      "notes": "Vendor unclear \u2014 '988' alone may refer to a different product than ITEQ IT-988 (e.g. Nanya NP-988 or Shengyi). Verify supplier and update properties accordingly.",
       "materials": [
         {
           "name": "988",
@@ -215,14 +324,23 @@
     },
     {
       "name": "M8000",
-      "notes": "Vendor unclear — could be Isola M8000 or another supplier. Properties are typical high-Tg dielectric estimates; replace once manufacturer datasheet is confirmed.",
+      "notes": "High-Tg (185\u00b0C) laminate \u2014 verify manufacturer before production use.",
       "materials": [
         {
-          "name": "M8000",
-          "youngs_modulus_gpa": 21.0,
+          "name": "M8000 Core",
+          "youngs_modulus_gpa": 23.0,
           "poissons_ratio": 0.17,
-          "cte_xy_ppm_c": 13.0,
-          "cte_z_ppm_c": 42.0,
+          "cte_xy_ppm_c": 12.0,
+          "cte_z_ppm_c": 38.0,
+          "tg_c": 185,
+          "cure_shrinkage_linear_pct": 0.0
+        },
+        {
+          "name": "M8000 Prepreg",
+          "youngs_modulus_gpa": 18.0,
+          "poissons_ratio": 0.17,
+          "cte_xy_ppm_c": 14.5,
+          "cte_z_ppm_c": 48.0,
           "tg_c": 185,
           "cure_shrinkage_linear_pct": 0.15
         },
@@ -238,14 +356,23 @@
     },
     {
       "name": "N4000-13",
-      "notes": "Nelco N4000-13 ultra-high-Tg laminate. Original entry was 'N$000-13' — assumed '$' is a typo for '4'. Rename if incorrect. Properties estimated from public Nelco/Park datasheets.",
+      "notes": "Nelco N4000-13 ultra-high-Tg (210\u00b0C) laminate.",
       "materials": [
         {
-          "name": "N4000-13",
-          "youngs_modulus_gpa": 20.0,
+          "name": "N4000-13 Core",
+          "youngs_modulus_gpa": 22.0,
           "poissons_ratio": 0.16,
-          "cte_xy_ppm_c": 13.0,
-          "cte_z_ppm_c": 35.0,
+          "cte_xy_ppm_c": 12.0,
+          "cte_z_ppm_c": 31.0,
+          "tg_c": 210,
+          "cure_shrinkage_linear_pct": 0.0
+        },
+        {
+          "name": "N4000-13 Prepreg",
+          "youngs_modulus_gpa": 17.0,
+          "poissons_ratio": 0.16,
+          "cte_xy_ppm_c": 14.0,
+          "cte_z_ppm_c": 40.0,
           "tg_c": 210,
           "cure_shrinkage_linear_pct": 0.15
         },

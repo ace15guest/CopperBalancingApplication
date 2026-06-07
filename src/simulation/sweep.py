@@ -34,7 +34,7 @@ _RESULTS_ROOT  = _PROJECT_ROOT / "assets" / "sweep_results"
 
 # Columns that uniquely identify one sweep combination
 _KEY_COLS = ("material", "dpi", "source", "blur_type", "sigma", "radius",
-             "delta_t_c", "fill_missing", "denoise_sigma", "crop_fraction", "name")
+             "delta_t_c", "fill_missing", "denoise_sigma", "crop_fraction", "name", "dat_file")
 
 
 def _rnd(v: float, decimals: int = 6) -> float:
@@ -51,7 +51,7 @@ def _row_key(row) -> tuple:
     return (str(row["material"]), int(row["dpi"]), str(row["source"]), str(row["blur_type"]),
             _rnd(row["sigma"]), _rnd(row["radius"]), _rnd(row["delta_t_c"]),
             _parse_bool(row["fill_missing"]), _rnd(row["denoise_sigma"]),
-            _rnd(row["crop_fraction"]), str(row["name"]))
+            _rnd(row["crop_fraction"]), str(row["name"]), str(row["dat_file"]))
 
 import numpy as np
 import pandas as pd
@@ -76,10 +76,11 @@ from src.simulation.clt_solver import solve_clt
 @dataclasses.dataclass
 class SweepRow:
     # --- identity ---
-    name:        str     # dat file stem
-    location:    str     # Q-label parsed from filename, e.g. "Q1"
-    side:        str     # "Top" or "Bottom" parsed from filename
-    material:    str     # stackup material set name, e.g. "890K"
+    name:        str     # config entry name, e.g. "ACCL-EM890K_Q1"
+    dat_file:    str     # Akrometrix .dat file stem, e.g. "ACCL-890K-01-Q1_Top_Global"
+    location:    str     # Q-label parsed from dat_file, e.g. "Q1"
+    side:        str     # "Top" or "Bottom" parsed from dat_file
+    material:    str     # stackup material set name, e.g. "EM890K"
     dpi:         int
     source:      str     # "imbalance" | "density" | "clt"
     blur_type:   str     # "none" | "gaussian" | "box"
@@ -116,6 +117,9 @@ class SweepRow:
     mag_ratio_median: float
     mag_ratio_p05:    float
     mag_ratio_p95:    float
+
+    # --- source path (for fit viewer reload) ---
+    akro_folder: str
 
 
 # ---------------------------------------------------------------------------
@@ -309,6 +313,28 @@ def _center_crop(arr: np.ndarray, fraction: float) -> np.ndarray:
 # Public entry point
 # ---------------------------------------------------------------------------
 
+def count_sweep_combinations(
+    n_dat_files: int,
+    dpi_values: list[int],
+    sigma_values: list[float],
+    box_radius_values: list[float],
+    delta_t_values: list[float],
+    fill_missing_values: list[bool],
+    denoise_sigma_values: list[float],
+    crop_center_fractions: list[float],
+) -> int:
+    """Total number of output rows this sweep will produce (ignoring resume cache)."""
+    blur_ops = _build_blur_ops(sigma_values, box_radius_values)
+    preprocessing_combos = len(fill_missing_values) * len(denoise_sigma_values)
+    return (
+        n_dat_files
+        * len(dpi_values)
+        * (2 * len(blur_ops) + len(delta_t_values))
+        * preprocessing_combos
+        * len(crop_center_fractions)
+    )
+
+
 def run_sweep(
     akro_folder: Path,
     gerber_folder: Path,
@@ -321,6 +347,7 @@ def run_sweep(
     fill_missing_values: list[bool] | None = None,
     denoise_sigma_values: list[float] | None = None,
     board_name: str | None = None,
+    cache_name: str | None = None,
     csv_path: Path | None = None,
     progress_cb: Callable[[int, int], None] | None = None,
 ) -> pd.DataFrame:
@@ -375,7 +402,8 @@ def run_sweep(
     # Blur ops shared by imbalance and density tracks (ΔT-independent)
     blur_ops = _build_blur_ops(sigma_values, box_radius_values or [])
 
-    design = board_name or gerber_folder.name
+    design   = board_name or gerber_folder.name
+    material = stackup.material_set_name
 
     # --- CSV path ---
     if csv_path is None:
@@ -384,40 +412,40 @@ def run_sweep(
 
     # --- Load existing results for resume ---
     done_keys: set[tuple] = set()
+    existing_df = pd.DataFrame()
     if csv_path.exists():
         try:
-            existing = pd.read_csv(csv_path)
-            if "material" not in existing.columns:
-                existing.insert(3, "material", material)
-                existing.to_csv(csv_path, index=False)
+            existing_df = pd.read_csv(csv_path)
+            if "material" not in existing_df.columns:
+                existing_df.insert(3, "material", material)
+                existing_df.to_csv(csv_path, index=False)
                 logger.info("Migrated existing CSV: added 'material' column (filled with %r).", material)
         except pd.errors.ParserError:
             logger.warning("CSV has mixed schema — repairing %s", csv_path)
-            existing = _repair_csv(csv_path, material)
+            existing_df = _repair_csv(csv_path, material)
         except Exception as exc:
             logger.warning("Could not read existing CSV (%s) — starting fresh", exc)
-            existing = pd.DataFrame()
+            existing_df = pd.DataFrame()
         try:
-            for _, row in existing.iterrows():
+            for _, row in existing_df.iterrows():
                 done_keys.add(_row_key(row))
             logger.info("Resume: loaded %d existing rows from %s", len(done_keys), csv_path)
         except Exception as exc:
             logger.warning("Could not build resume keys (%s) — starting fresh", exc)
             done_keys = set()
+            existing_df = pd.DataFrame()
 
     # --- Split blur ops: CLT (no blur) sweeps all ΔT; Gaussian/box run once ---
     stems = [Path(m.source_file).stem for m in raw_measurements]
     crop_fractions = crop_center_fractions or [1.0]
 
-    material = stackup.material_set_name
-
     def _map_key(dpi, source, bt, sigma, radius, fm, ds, cf, stem):
         return (material, dpi, source, bt, _rnd(sigma), _rnd(radius), _rnd(0.0),
-                bool(fm), ds, _rnd(cf), stem)
+                bool(fm), ds, _rnd(cf), design, stem)
 
     def _clt_key(dpi, dt, fm, ds, cf, stem):
         return (material, dpi, "clt", "none", 0.0, 0.0, _rnd(dt),
-                bool(fm), ds, _rnd(cf), stem)
+                bool(fm), ds, _rnd(cf), design, stem)
 
     total = sum(
         1
@@ -454,7 +482,7 @@ def run_sweep(
     )
 
     for dpi in dpi_values:
-        density_maps = _rasterize_at_dpi(gerber_folder, stackup, dpi, design)
+        density_maps = _rasterize_at_dpi(gerber_folder, stackup, dpi, design, cache_name or "")
         pixel_size_m = 25.4e-3 / dpi
 
         # ----------------------------------------------------------------
@@ -471,7 +499,7 @@ def run_sweep(
                            in done_keys for cf in crop_fractions):
                         continue
                     completed, rows = _run_comparison(
-                        w, meas, stem, dpi, material, "imbalance", bt, sigma, radius, 0.0,
+                        w, meas, stem, design, str(akro_folder), dpi, material, "imbalance", bt, sigma, radius, 0.0,
                         fm, ds, crop_fractions, done_keys, rows, csv_path,
                         completed, total, progress_cb,
                         key_fn=lambda cf, _bt=bt, _s=sigma, _r=radius, _fm=fm, _ds=ds:
@@ -492,7 +520,7 @@ def run_sweep(
                            in done_keys for cf in crop_fractions):
                         continue
                     completed, rows = _run_comparison(
-                        w, meas, stem, dpi, material, "density", bt, sigma, radius, 0.0,
+                        w, meas, stem, design, str(akro_folder), dpi, material, "density", bt, sigma, radius, 0.0,
                         fm, ds, crop_fractions, done_keys, rows, csv_path,
                         completed, total, progress_cb,
                         key_fn=lambda cf, _bt=bt, _s=sigma, _r=radius, _fm=fm, _ds=ds:
@@ -519,15 +547,20 @@ def run_sweep(
                            for cf in crop_fractions):
                         continue
                     completed, rows = _run_comparison(
-                        w_clt, meas, stem, dpi, material, "clt", "none", 0.0, 0.0, dt,
+                        w_clt, meas, stem, design, str(akro_folder), dpi, material, "clt", "none", 0.0, 0.0, dt,
                         fm, ds, crop_fractions, done_keys, rows, csv_path,
                         completed, total, progress_cb,
                         key_fn=lambda cf, _fm=fm, _ds=ds:
                             _clt_key(dpi, dt, _fm, _ds, cf, stem),
                     )
 
-    logger.info("Sweep complete — %d rows", len(rows))
-    return pd.DataFrame([dataclasses.asdict(r) for r in rows])
+    logger.info("Sweep complete — %d new rows, %d cached rows", len(rows), len(existing_df))
+    new_df = pd.DataFrame([dataclasses.asdict(r) for r in rows])
+    if existing_df.empty:
+        return new_df
+    if new_df.empty:
+        return existing_df.reset_index(drop=True)
+    return pd.concat([existing_df, new_df], ignore_index=True)
 
 
 # ---------------------------------------------------------------------------
@@ -538,6 +571,8 @@ def _run_comparison(
     w: np.ndarray,
     meas,
     stem: str,
+    board_name: str,
+    akro_folder: str,
     dpi: int,
     material: str,
     source: str,
@@ -588,10 +623,12 @@ def _run_comparison(
             cmp = _empty_cmp()
 
         rows.append(SweepRow(
-            name=stem,
+            name=board_name,
+            dat_file=stem,
             location=_parse_location(stem),
             side=_parse_side(stem),
             material=material,
+            akro_folder=akro_folder,
             dpi=dpi,
             source=source,
             blur_type=blur_type,
@@ -646,54 +683,80 @@ def _rasterize_at_dpi(
     stackup: Stackup,
     dpi: int,
     design: str,
+    cache_name: str = "",
 ) -> list[CopperDensityMap]:
-    folder_name = f"{design}_{dpi}dpi"
-    npz_folder  = _NPZ_ROOT / folder_name
-    png_folder  = _PNG_ROOT / folder_name
-
-    # --- Priority 1: load from existing NPZs (fastest, no PIL needed) ---
-    existing_npzs = sorted(npz_folder.glob("*.npz")) if npz_folder.exists() else []
-    if existing_npzs:
-        logger.info("DPI %d — reusing %d cached NPZs from %s", dpi, len(existing_npzs), npz_folder)
-        npz_by_stem = {p.stem: p for p in existing_npzs}
-        density_maps: list[CopperDensityMap] = []
-        for row in stackup.rows:
-            if row.row_type != "copper" or row.gerber_path is None:
-                continue
-            stem = Path(row.gerber_path).stem
-            npz_path = npz_by_stem.get(stem)
-            if npz_path is None:
-                logger.warning("DPI %d — no NPZ for Gerber stem '%s'", dpi, stem)
-                continue
-            data = np.load(npz_path)
-            density_maps.append(CopperDensityMap(
-                layer_name=f"L{row.layer_number}",
-                density=data["density"].astype(np.float32),
-                x_coords=np.arange(data["density"].shape[1], dtype=np.float32),
-                y_coords=np.arange(data["density"].shape[0], dtype=np.float32),
-            ))
-        return density_maps
-
-    # --- Priority 2: reuse existing PNGs ---
-    existing_pngs = sorted(png_folder.glob("*.png")) if png_folder.exists() else []
-    if existing_pngs:
-        logger.info("DPI %d — reusing %d cached PNGs from %s", dpi, len(existing_pngs), png_folder)
-        batch_png_paths = existing_pngs
+    # Folder name: {cache_name}_{gerber_folder.name}_{dpi}dpi  e.g. Cu_Bal_TV_Q1_50dpi
+    # Falls back to {design}_{dpi}dpi only if cache_name is not set.
+    gerber_stem = gerber_folder.name
+    if cache_name:
+        folder_name = f"{cache_name}_{gerber_stem}_{dpi}dpi"
     else:
-        # --- Priority 3: render from Gerbers ---
-        logger.info("DPI %d — rasterising Gerbers → %s", dpi, png_folder)
-        batch = convert_folder(gerber_folder, _PNG_ROOT, design, dpi=dpi)
-        batch_png_paths = batch.png_paths
-        logger.info("DPI %d — wrote %d PNGs to %s", dpi, len(batch_png_paths), png_folder)
+        folder_name = f"{design}_{dpi}dpi"
 
-    # Save NPZs for future reuse
+    npz_folder = _NPZ_ROOT / folder_name
+    png_folder = _PNG_ROOT / folder_name
+
+    # --- Priority 1: existing NPZs ---
+    if npz_folder.exists():
+        npzs = sorted(npz_folder.glob("*.npz"))
+        if npzs:
+            logger.info("DPI %d — reusing %d cached NPZs from %s", dpi, len(npzs), npz_folder)
+            npz_by_stem = {p.stem: p for p in npzs}
+            density_maps: list[CopperDensityMap] = []
+            for row in stackup.rows:
+                if row.row_type != "copper" or row.gerber_path is None:
+                    continue
+                stem = Path(row.gerber_path).stem
+                npz_path = npz_by_stem.get(stem)
+                if npz_path is None:
+                    logger.warning("DPI %d — no NPZ for Gerber stem '%s'", dpi, stem)
+                    continue
+                data = np.load(npz_path)
+                density_maps.append(CopperDensityMap(
+                    layer_name=f"L{row.layer_number}",
+                    density=data["density"].astype(np.float32),
+                    x_coords=np.arange(data["density"].shape[1], dtype=np.float32),
+                    y_coords=np.arange(data["density"].shape[0], dtype=np.float32),
+                ))
+            return density_maps
+
+    # --- Priority 2: existing PNGs → convert to NPZ ---
+    if png_folder.exists():
+        batch_png_paths = sorted(png_folder.glob("*.png"))
+        if batch_png_paths:
+            logger.info("DPI %d — reusing %d cached PNGs from %s", dpi, len(batch_png_paths), png_folder)
+            npz_folder.mkdir(parents=True, exist_ok=True)
+            for png in batch_png_paths:
+                np.savez_compressed(npz_folder / f"{png.stem}.npz",
+                                    density=png_to_density_map(png, layer_name=png.stem).density)
+            logger.info("DPI %d — wrote %d NPZs to %s", dpi, len(batch_png_paths), npz_folder)
+            density_maps = []
+            for row in stackup.rows:
+                if row.row_type != "copper" or row.gerber_path is None:
+                    continue
+                stem = Path(row.gerber_path).stem
+                npz_path = npz_folder / f"{stem}.npz"
+                if not npz_path.exists():
+                    continue
+                data = np.load(npz_path)
+                density_maps.append(CopperDensityMap(
+                    layer_name=f"L{row.layer_number}",
+                    density=data["density"].astype(np.float32),
+                    x_coords=np.arange(data["density"].shape[1], dtype=np.float32),
+                    y_coords=np.arange(data["density"].shape[0], dtype=np.float32),
+                ))
+            return density_maps
+
+    # --- Priority 3: render from Gerbers → save PNG + NPZ ---
+    logger.info("DPI %d — rasterising Gerbers → %s", dpi, png_folder)
+    batch = convert_folder(gerber_folder, _PNG_ROOT, folder_name.rsplit(f"_{dpi}dpi", 1)[0], dpi=dpi)
+    batch_png_paths = batch.png_paths
+    logger.info("DPI %d — wrote %d PNGs to %s", dpi, len(batch_png_paths), png_folder)
     npz_folder.mkdir(parents=True, exist_ok=True)
     for png in batch_png_paths:
-        npz_path = npz_folder / f"{png.stem}.npz"
-        dm = png_to_density_map(png, layer_name=png.stem)
-        np.savez_compressed(npz_path, density=dm.density)
+        np.savez_compressed(npz_folder / f"{png.stem}.npz",
+                            density=png_to_density_map(png, layer_name=png.stem).density)
     logger.info("DPI %d — wrote %d NPZs to %s", dpi, len(batch_png_paths), npz_folder)
-
     density_maps = []
     for row in stackup.rows:
         if row.row_type != "copper" or row.gerber_path is None:

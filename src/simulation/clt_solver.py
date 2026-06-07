@@ -12,7 +12,10 @@ from src.simulation.materials import load_material_library, physics_name_for
 from src.simulation.solver import (
     LayerSpec,
     _classify_dielectric,
+    assemble_A_matrix,
+    assemble_B_matrix,
     assemble_D_matrix,
+    compute_thermal_forces,
     compute_thermal_moments,
     compute_z_coordinates,
     reconstruct_displacement,
@@ -128,9 +131,12 @@ def solve_clt(
     # --- CLT steps 4–9 ---
     delta_T_map = {"core": delta_temp_c, "prepreg": delta_temp_c}
     z_coords  = compute_z_coordinates(layers)
+    A         = assemble_A_matrix(layers, z_coords, grid_shape, library)
+    B         = assemble_B_matrix(layers, z_coords, grid_shape, library)
     D         = assemble_D_matrix(layers, z_coords, grid_shape, library)
     MT        = compute_thermal_moments(layers, z_coords, delta_T_map, grid_shape, library)
-    kappa_x, kappa_y, _ = solve_curvature(D, MT, layers, z_coords, grid_shape, library)
+    NT        = compute_thermal_forces( layers, z_coords, delta_T_map, grid_shape, library)
+    kappa_x, kappa_y, _ = solve_curvature(A, B, D, MT, NT)
     w_mm      = reconstruct_displacement(kappa_x, kappa_y, board_width_m, board_height_m)
 
     x_coords = np.arange(NX, dtype=np.float32) * float(pixel_size_m * 1e3)

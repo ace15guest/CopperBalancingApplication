@@ -31,11 +31,13 @@ from PyQt6.QtWidgets import (
 import json
 
 from src.ingestion.stackup import load_stackup
-from src.simulation.sweep import run_sweep
+from src.simulation.sweep import count_sweep_combinations, run_sweep
 
 _PREVIEW_COLS = [
-    ("Name",        "name",           "s",    "Akrometrix .dat filename stem."),
-    ("Material",    "material",       "s",    "Stackup material set name (e.g. 890K, IT988). Comes from the stackup JSON."),
+    ("Name",        "name",           "s",    "Config entry name (e.g. ACCL-EM890K_Q1). Set from the batch config file."),
+    ("DAT File",    "dat_file",       "s",    "Akrometrix .dat filename stem used for this measurement."),
+    ("Side",        "side",           "s",    "Board side measured: Top or Bottom, parsed from the .dat filename."),
+    ("Material",    "material",       "s",    "Stackup material set name (e.g. EM890K, IT988). Comes from the stackup JSON."),
     ("DPI",         "dpi",            "d",    "Gerber rasterisation resolution. Higher DPI captures finer copper detail but increases memory and solve time."),
     ("ΔT (°C)",     "delta_t_c",      ".1f",  "Temperature delta for CLT solve. 0.0 for imbalance and density tracks (ΔT-independent)."),
     ("Source",      "source",         "s",    "'imbalance' = copper imbalance map (top−bottom weighted by oz and z-position).\n'density'   = total copper density map (unsigned sum of all layers).\n'clt'       = CLT warpage prediction."),
@@ -58,19 +60,30 @@ class _SweepWorker(QThread):
     finished = pyqtSignal(object)     # pd.DataFrame on success
     error = pyqtSignal(str)
 
-    def __init__(self, configs: list[dict], sweep_params: dict):
+    def __init__(self, configs: list[dict], sweep_params: dict, grand_total: int = 0):
         """
         configs      : list of {"name", "akro_folder", "gerber_folder", "stackup"} dicts.
         sweep_params : shared sweep settings (dpi_values, delta_t_values, etc.).
+        grand_total  : pre-computed total combinations across all configs for the progress denominator.
         """
         super().__init__()
         self._configs = configs
         self._p = sweep_params
+        self._grand_total = grand_total
 
     def run(self):
         try:
             all_frames = []
+            completed_offset = 0
             for cfg in self._configs:
+                last_total = [0]
+                offset = completed_offset
+
+                def _cb(done, total, _offset=offset, _lt=last_total):
+                    _lt[0] = total
+                    denom = self._grand_total if self._grand_total else total
+                    self.progress.emit(_offset + done, denom)
+
                 df = run_sweep(
                     akro_folder=cfg["akro_folder"],
                     gerber_folder=cfg["gerber_folder"],
@@ -83,10 +96,12 @@ class _SweepWorker(QThread):
                     fill_missing_values=self._p["fill_missing_values"],
                     denoise_sigma_values=self._p["denoise_sigma_values"],
                     board_name=cfg["name"],
+                    cache_name=cfg.get("cache_name", ""),
                     csv_path=cfg.get("csv_path"),
-                    progress_cb=lambda done, total: self.progress.emit(done, total),
+                    progress_cb=_cb,
                 )
                 all_frames.append(df)
+                completed_offset += last_total[0]
             combined = pd.concat(all_frames, ignore_index=True) if all_frames else pd.DataFrame()
             self.finished.emit(combined)
         except NotImplementedError:
@@ -102,12 +117,20 @@ class _SweepWorker(QThread):
 class SweepPage(QWidget):
     """DPI × ΔT parameter sweep: CLT simulation vs. Akrometrix folder."""
 
+    _DEFAULT_CONFIG = (
+        Path(__file__).parents[2]
+        / "assets" / "Cu_Bal_TV_configs.json"
+    )
+
     def __init__(self):
         super().__init__()
         self._results: pd.DataFrame | None = None
         self._worker: _SweepWorker | None = None
         self._dashboard_running: bool = False
         self._build()
+        if self._DEFAULT_CONFIG.exists():
+            self._config_path.setText(str(self._DEFAULT_CONFIG))
+            self._load_configs()
 
     # ------------------------------------------------------------------
     # Layout
@@ -167,8 +190,8 @@ class SweepPage(QWidget):
 
         # Board name — used to key PNG/NPZ cache folders
         self._board_name = QLineEdit()
-        self._board_name.setPlaceholderText("e.g. Cu_Bal_TV_Q1  (used to name cached render folders)")
-        self._board_name.setText("Cu_Bal_TV_Q1")
+        self._board_name.setPlaceholderText("e.g. Cu_Bal_TV  (used to name cached render folders)")
+        self._board_name.setText("Cu_Bal_TV")
         self._board_name.textChanged.connect(self._update_csv_default)
         form.addRow("Board name:", self._board_name)
 
@@ -179,7 +202,7 @@ class SweepPage(QWidget):
 
         self._akro_path = self._path_row(form, "Akrometrix folder:", folder=True)
         self._akro_path.setText(
-            r"C:\Users\Asa Guest\Documents\Projects\CopperBalancingApplication\assets\AkroFiles\TopDatFiles\ACCL-890K\Q1"
+            r"C:\Users\Asa Guest\Documents\Projects\CopperBalancingApplication\assets\AkroFiles\TopDatFiles\ACCL-EM890K\Q1"
         )
         self._stackup_path = self._path_row(form, "Stackup JSON:", folder=False,
                                              filter="Stackup Files (*.json);;All Files (*)")
@@ -254,7 +277,13 @@ class SweepPage(QWidget):
     def _build_params_group(self) -> QGroupBox:
         box = QGroupBox("Sweep Parameters")
         outer = QVBoxLayout(box)
-        outer.setSpacing(6)
+        outer.setSpacing(4)
+
+        def _preview_label() -> QLabel:
+            lbl = QLabel()
+            lbl.setStyleSheet("color: #888; font-family: monospace; font-size: 10px;")
+            lbl.setContentsMargins(4, 0, 0, 4)
+            return lbl
 
         # ΔT row
         dt_row = QHBoxLayout()
@@ -266,7 +295,6 @@ class SweepPage(QWidget):
         self._dt_min.setSuffix(" °C")
         self._dt_min.setDecimals(1)
         dt_row.addWidget(self._dt_min)
-
         dt_row.addWidget(QLabel("Max:"))
         self._dt_max = QDoubleSpinBox()
         self._dt_max.setRange(0, 400)
@@ -274,7 +302,6 @@ class SweepPage(QWidget):
         self._dt_max.setSuffix(" °C")
         self._dt_max.setDecimals(1)
         dt_row.addWidget(self._dt_max)
-
         dt_row.addWidget(QLabel("Steps:"))
         self._dt_steps = QSpinBox()
         self._dt_steps.setRange(1, 200)
@@ -282,6 +309,8 @@ class SweepPage(QWidget):
         dt_row.addWidget(self._dt_steps)
         dt_row.addStretch()
         outer.addLayout(dt_row)
+        self._dt_preview = _preview_label()
+        outer.addWidget(self._dt_preview)
 
         # DPI row
         dpi_row = QHBoxLayout()
@@ -293,22 +322,22 @@ class SweepPage(QWidget):
         self._dpi_min.setSuffix(" dpi")
         self._dpi_min.setSingleStep(50)
         dpi_row.addWidget(self._dpi_min)
-
         dpi_row.addWidget(QLabel("Max:"))
         self._dpi_max = QSpinBox()
         self._dpi_max.setRange(50, 5000)
-        self._dpi_max.setValue(100)
+        self._dpi_max.setValue(300)
         self._dpi_max.setSuffix(" dpi")
         self._dpi_max.setSingleStep(50)
         dpi_row.addWidget(self._dpi_max)
-
         dpi_row.addWidget(QLabel("Steps:"))
         self._dpi_steps = QSpinBox()
         self._dpi_steps.setRange(1, 50)
-        self._dpi_steps.setValue(2)
+        self._dpi_steps.setValue(6)
         dpi_row.addWidget(self._dpi_steps)
         dpi_row.addStretch()
         outer.addLayout(dpi_row)
+        self._dpi_preview = _preview_label()
+        outer.addWidget(self._dpi_preview)
 
         # Gaussian sigma row
         sigma_row = QHBoxLayout()
@@ -320,27 +349,27 @@ class SweepPage(QWidget):
         sigma_row.addWidget(self._gauss_cb)
         sigma_row.addWidget(QLabel("Min:"))
         self._sigma_min = QDoubleSpinBox()
-        self._sigma_min.setRange(0, 50)
+        self._sigma_min.setRange(0, 1000)
         self._sigma_min.setValue(0)
         self._sigma_min.setSuffix(" px")
         self._sigma_min.setDecimals(1)
         sigma_row.addWidget(self._sigma_min)
-
         sigma_row.addWidget(QLabel("Max:"))
         self._sigma_max = QDoubleSpinBox()
-        self._sigma_max.setRange(0, 50)
-        self._sigma_max.setValue(5)
+        self._sigma_max.setRange(0, 1000)
+        self._sigma_max.setValue(500)
         self._sigma_max.setSuffix(" px")
         self._sigma_max.setDecimals(1)
         sigma_row.addWidget(self._sigma_max)
-
         sigma_row.addWidget(QLabel("Steps:"))
         self._sigma_steps = QSpinBox()
         self._sigma_steps.setRange(1, 50)
-        self._sigma_steps.setValue(2)
+        self._sigma_steps.setValue(6)
         sigma_row.addWidget(self._sigma_steps)
         sigma_row.addStretch()
         outer.addLayout(sigma_row)
+        self._sigma_preview = _preview_label()
+        outer.addWidget(self._sigma_preview)
 
         # Box blur radius row
         box_row = QHBoxLayout()
@@ -352,28 +381,27 @@ class SweepPage(QWidget):
         box_row.addWidget(self._box_cb)
         box_row.addWidget(QLabel("Min:"))
         self._box_min = QDoubleSpinBox()
-        self._box_min.setRange(0, 50)
-        self._box_min.setValue(1)
+        self._box_min.setRange(0, 1000)
+        self._box_min.setValue(10)
         self._box_min.setSuffix(" px")
         self._box_min.setDecimals(1)
         box_row.addWidget(self._box_min)
-
         box_row.addWidget(QLabel("Max:"))
         self._box_max = QDoubleSpinBox()
-        self._box_max.setRange(0, 50)
-        self._box_max.setValue(5)
+        self._box_max.setRange(0, 1000)
+        self._box_max.setValue(500)
         self._box_max.setSuffix(" px")
         self._box_max.setDecimals(1)
         box_row.addWidget(self._box_max)
-
         box_row.addWidget(QLabel("Steps:"))
         self._box_steps = QSpinBox()
         self._box_steps.setRange(1, 50)
-        self._box_steps.setValue(2)
+        self._box_steps.setValue(6)
         box_row.addWidget(self._box_steps)
-
         box_row.addStretch()
         outer.addLayout(box_row)
+        self._box_preview = _preview_label()
+        outer.addWidget(self._box_preview)
 
         # Center crop row
         crop_row = QHBoxLayout()
@@ -381,27 +409,27 @@ class SweepPage(QWidget):
         crop_row.addWidget(QLabel("Center crop  Min:"))
         self._crop_min = QDoubleSpinBox()
         self._crop_min.setRange(0.1, 1.0)
-        self._crop_min.setValue(0.7)
+        self._crop_min.setValue(0.2)
         self._crop_min.setSingleStep(0.1)
         self._crop_min.setDecimals(2)
         self._crop_min.setToolTip("Fraction of each board dimension kept (1.0 = no crop).")
         crop_row.addWidget(self._crop_min)
-
         crop_row.addWidget(QLabel("Max:"))
         self._crop_max = QDoubleSpinBox()
         self._crop_max.setRange(0.1, 1.0)
-        self._crop_max.setValue(1.0)
+        self._crop_max.setValue(0.7)
         self._crop_max.setSingleStep(0.1)
         self._crop_max.setDecimals(2)
         crop_row.addWidget(self._crop_max)
-
         crop_row.addWidget(QLabel("Steps:"))
         self._crop_steps = QSpinBox()
         self._crop_steps.setRange(1, 10)
-        self._crop_steps.setValue(2)
+        self._crop_steps.setValue(6)
         crop_row.addWidget(self._crop_steps)
         crop_row.addStretch()
         outer.addLayout(crop_row)
+        self._crop_preview = _preview_label()
+        outer.addWidget(self._crop_preview)
 
         # Preprocess row
         pre_row = QHBoxLayout()
@@ -413,13 +441,11 @@ class SweepPage(QWidget):
             "biharmonic inpainting applied to the Akro measurement."
         )
         pre_row.addWidget(self._fill_sweep_cb)
-
         self._denoise_sweep_cb = QCheckBox("Denoise σ")
         self._denoise_sweep_cb.setChecked(True)
         self._denoise_sweep_cb.setToolTip("Sweep Gaussian denoise sigma. σ = 0 includes a no-denoise baseline.")
         self._denoise_sweep_cb.toggled.connect(self._on_denoise_toggled)
         pre_row.addWidget(self._denoise_sweep_cb)
-
         pre_row.addWidget(QLabel("Min:"))
         self._denoise_min = QDoubleSpinBox()
         self._denoise_min.setRange(0, 100)
@@ -427,24 +453,63 @@ class SweepPage(QWidget):
         self._denoise_min.setSuffix(" px")
         self._denoise_min.setDecimals(1)
         pre_row.addWidget(self._denoise_min)
-
         pre_row.addWidget(QLabel("Max:"))
         self._denoise_max = QDoubleSpinBox()
         self._denoise_max.setRange(0, 100)
-        self._denoise_max.setValue(10)
+        self._denoise_max.setValue(100)
         self._denoise_max.setSuffix(" px")
         self._denoise_max.setDecimals(1)
         pre_row.addWidget(self._denoise_max)
-
         pre_row.addWidget(QLabel("Steps:"))
         self._denoise_steps = QSpinBox()
         self._denoise_steps.setRange(1, 20)
-        self._denoise_steps.setValue(2)
+        self._denoise_steps.setValue(5)
         pre_row.addWidget(self._denoise_steps)
         pre_row.addStretch()
         outer.addLayout(pre_row)
+        self._denoise_preview = _preview_label()
+        outer.addWidget(self._denoise_preview)
+
+        # Wire all spinboxes to the preview updater
+        for w in (self._dt_min, self._dt_max, self._dt_steps,
+                  self._dpi_min, self._dpi_max, self._dpi_steps,
+                  self._sigma_min, self._sigma_max, self._sigma_steps,
+                  self._box_min, self._box_max, self._box_steps,
+                  self._crop_min, self._crop_max, self._crop_steps,
+                  self._denoise_min, self._denoise_max, self._denoise_steps):
+            w.valueChanged.connect(self._update_param_previews)
+        self._update_param_previews()
 
         return box
+
+    @staticmethod
+    def _fmt_values(values: list, fmt: str = ".1f", n: int = 5) -> str:
+        if not values:
+            return "—"
+        strs = [format(v, fmt) for v in values]
+        if len(strs) <= 2 * n:
+            return "  ".join(strs)
+        return "  ".join(strs[:n]) + "  …  " + "  ".join(strs[-n:])
+
+    def _update_param_previews(self) -> None:
+        def _linspace(lo, hi, steps):
+            if steps <= 1:
+                return [lo]
+            return [lo + (hi - lo) * i / (steps - 1) for i in range(steps)]
+
+        dt  = _linspace(self._dt_min.value(), self._dt_max.value(), self._dt_steps.value())
+        dpi = [round(v) for v in _linspace(self._dpi_min.value(), self._dpi_max.value(), self._dpi_steps.value())]
+        sig = _linspace(self._sigma_min.value(), self._sigma_max.value(), self._sigma_steps.value())
+        box = _linspace(self._box_min.value(), self._box_max.value(), self._box_steps.value())
+        crp = _linspace(self._crop_min.value(), self._crop_max.value(), self._crop_steps.value())
+        den = _linspace(self._denoise_min.value(), self._denoise_max.value(), self._denoise_steps.value())
+
+        self._dt_preview.setText("  →  " + self._fmt_values(dt,  ".1f") + " °C")
+        self._dpi_preview.setText("  →  " + self._fmt_values(dpi, ".0f") + " dpi")
+        self._sigma_preview.setText("  →  " + self._fmt_values(sig, ".1f") + " px")
+        self._box_preview.setText("  →  " + self._fmt_values(box, ".1f") + " px")
+        self._crop_preview.setText("  →  " + self._fmt_values(crp, ".2f"))
+        self._denoise_preview.setText("  →  " + self._fmt_values(den, ".1f") + " px")
 
     def _build_run_row(self) -> QWidget:
         w = QWidget()
@@ -469,6 +534,11 @@ class SweepPage(QWidget):
         self._dashboard_btn.clicked.connect(self._launch_dashboard)
         row.addWidget(self._dashboard_btn)
 
+        self._load_csv_btn = QPushButton("Load CSV…")
+        self._load_csv_btn.setFixedWidth(90)
+        self._load_csv_btn.clicked.connect(self._load_csv)
+        row.addWidget(self._load_csv_btn)
+
         self._save_btn = QPushButton("Save CSV…")
         self._save_btn.setFixedWidth(90)
         self._save_btn.setEnabled(False)
@@ -486,11 +556,14 @@ class SweepPage(QWidget):
         return w
 
     def _build_table(self) -> QTableWidget:
-        t = QTableWidget(0, len(_PREVIEW_COLS))
-        t.setHorizontalHeaderLabels([c[0] for c in _PREVIEW_COLS])
+        t = QTableWidget(0, len(_PREVIEW_COLS) + 1)   # +1 for View Fit button
+        t.setHorizontalHeaderLabels([c[0] for c in _PREVIEW_COLS] + [""])
         for col, (_, _, _, tip) in enumerate(_PREVIEW_COLS):
             t.horizontalHeaderItem(col).setToolTip(tip)
-        t.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        hdr = t.horizontalHeader()
+        hdr.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        hdr.setSectionResizeMode(len(_PREVIEW_COLS), QHeaderView.ResizeMode.Fixed)
+        t.setColumnWidth(len(_PREVIEW_COLS), 80)
         t.verticalHeader().setVisible(False)
         t.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
         return t
@@ -519,6 +592,19 @@ class SweepPage(QWidget):
                 self._config_combo.addItem(cfg.get("name", "(unnamed)"))
             if self._loaded_configs:
                 self._config_combo.setCurrentIndex(0)
+
+            # Derive the board name and CSV path from the config file stem
+            _results = Path(__file__).parents[2] / "assets" / "sweep_results"
+            stem = Path(path_str).stem
+            for _sfx in ("_configs", "_config", "_sweep"):
+                if stem.endswith(_sfx):
+                    stem = stem[: -len(_sfx)]
+                    break
+            # Board name = design name shared by all entries in this config file
+            self._board_name.setText(stem)
+            default_csv = str(_results / f"{stem}.csv")
+            if not self._csv_path.text().strip():
+                self._csv_path.setText(default_csv)
         except Exception as exc:
             QMessageBox.critical(self, "Config load failed", str(exc))
 
@@ -526,8 +612,7 @@ class SweepPage(QWidget):
         if index < 0 or index >= len(self._loaded_configs):
             return
         cfg = self._loaded_configs[index]
-        if name := cfg.get("name"):
-            self._board_name.setText(name)
+        # Board name stays as the config FILE stem — don't overwrite it per entry
         if akro := cfg.get("akro_folder"):
             self._akro_path.setText(akro)
         if stackup := cfg.get("stackup"):
@@ -666,16 +751,22 @@ class SweepPage(QWidget):
             "csv_path":     Path(csv_str) if csv_str else None,
         }
 
-    def _start_worker(self, configs: list[dict], sweep_params: dict) -> None:
+    def _start_worker(self, configs: list[dict], sweep_params: dict,
+                      total_combinations: int = 0) -> None:
         self._run_btn.setEnabled(False)
         self._batch_btn.setEnabled(False)
         self._save_btn.setEnabled(False)
         self._progress.setVisible(True)
         self._progress.setRange(0, 1)
         self._progress.setValue(0)
-        self._status.setText(f"Running {len(configs)} config(s)…")
+        if total_combinations:
+            self._status.setText(
+                f"Running {len(configs)} config(s) — {total_combinations:,} total combinations…"
+            )
+        else:
+            self._status.setText(f"Running {len(configs)} config(s)…")
 
-        self._worker = _SweepWorker(configs, sweep_params)
+        self._worker = _SweepWorker(configs, sweep_params, grand_total=total_combinations)
         self._worker.progress.connect(self._on_progress)
         self._worker.finished.connect(self._on_finished)
         self._worker.error.connect(self._on_error)
@@ -715,7 +806,25 @@ class SweepPage(QWidget):
         if sweep_params is None:
             return
 
+        # All batch configs share one CSV — named after the config JSON file
+        csv_str = self._csv_path.text().strip()
+        if not csv_str:
+            config_str = self._config_path.text().strip()
+            _results = Path(__file__).parents[2] / "assets" / "sweep_results"
+            stem = Path(config_str).stem if config_str else "batch"
+            for _sfx in ("_configs", "_config", "_sweep"):
+                if stem.endswith(_sfx):
+                    stem = stem[: -len(_sfx)]
+                    break
+            csv_str = str(_results / f"{stem}.csv")
+            self._csv_path.setText(csv_str)
+        shared_csv = Path(csv_str)
+
+        # Top-level board name used for the raster cache folder naming
+        cache_name = self._board_name.text().strip()
+
         configs = []
+        total_combinations = 0
         for raw in self._loaded_configs:
             cfg = self._resolve_config(
                 raw.get("akro_folder", ""),
@@ -724,9 +833,23 @@ class SweepPage(QWidget):
             )
             if cfg is None:
                 return  # error already shown
+            cfg["csv_path"]   = shared_csv   # all configs → same CSV
+            cfg["cache_name"] = cache_name   # shared raster cache key
             configs.append(cfg)
 
-        self._start_worker(configs, sweep_params)
+            n_dat = len(list(cfg["akro_folder"].glob("*.dat")))
+            total_combinations += count_sweep_combinations(
+                n_dat_files=n_dat,
+                dpi_values=sweep_params["dpi_values"],
+                sigma_values=sweep_params["sigma_values"],
+                box_radius_values=sweep_params["box_radius_values"],
+                delta_t_values=sweep_params["delta_t_values"],
+                fill_missing_values=sweep_params["fill_missing_values"],
+                denoise_sigma_values=sweep_params["denoise_sigma_values"],
+                crop_center_fractions=sweep_params["crop_center_fractions"],
+            )
+
+        self._start_worker(configs, sweep_params, total_combinations)
 
     def _launch_dashboard(self) -> None:
         import threading, webbrowser
@@ -803,6 +926,21 @@ class SweepPage(QWidget):
         self._batch_btn.setEnabled(True)
         QMessageBox.critical(self, "Sweep failed", msg)
 
+    def _load_csv(self) -> None:
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Load sweep results", "", "CSV Files (*.csv);;All Files (*)"
+        )
+        if not path:
+            return
+        try:
+            df = pd.read_csv(path, on_bad_lines="skip", engine="python")
+            self._results = df
+            self._save_btn.setEnabled(True)
+            self._status.setText(f"Loaded {len(df):,} rows from {Path(path).name}")
+            self._populate_table(df)
+        except Exception as exc:
+            QMessageBox.critical(self, "Load failed", str(exc))
+
     def _save_csv(self) -> None:
         if self._results is None:
             return
@@ -840,3 +978,15 @@ class SweepPage(QWidget):
                 item = QTableWidgetItem(text)
                 item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
                 self._table.setItem(row_idx, col_idx, item)
+
+            btn = QPushButton("View Fit")
+            row_data = record.to_dict()
+            btn.clicked.connect(lambda _, r=row_data: self._show_fit_viewer(r))
+            self._table.setCellWidget(row_idx, len(_PREVIEW_COLS), btn)
+
+    def _show_fit_viewer(self, row: dict) -> None:
+        from ui.components.fit_viewer import FitViewerDialog
+        stackup_str = self._stackup_path.text().strip()
+        hint = Path(stackup_str) if stackup_str else None
+        dlg = FitViewerDialog(row, stackup_hint=hint, parent=self)
+        dlg.show()

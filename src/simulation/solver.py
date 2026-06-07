@@ -477,6 +477,54 @@ def assemble_D_matrix(
     return D
 
 
+def assemble_A_matrix(
+    layers: list[LayerSpec],
+    z_coords: list[tuple[float, float]],
+    grid_shape: tuple[int, int],
+    library: dict[str, PhysicsProps],
+) -> NDArray:
+    """In-plane stiffness: A_ij = Σ_k Q_ij_k · Δz_k  [Pa·m = N/m]."""
+    NY, NX = grid_shape
+    A = np.zeros((NY, NX, 3, 3), dtype=np.float64)
+    active = [l for l in layers if l.row_class != "ignore"]
+    for layer, (z_bot, z_top) in zip(active, z_coords):
+        if layer.E_pa is None:
+            continue
+        Ex_eff, Ey_eff, nu_eff, _, _ = compute_effective_properties(layer, grid_shape, library)
+        Q11, Q12, Q22, Q66 = _q_matrix(Ex_eff, Ey_eff, nu_eff)
+        dz = z_top - z_bot
+        A[..., 0, 0] += Q11 * dz
+        A[..., 0, 1] += Q12 * dz
+        A[..., 1, 0] += Q12 * dz
+        A[..., 1, 1] += Q22 * dz
+        A[..., 2, 2] += Q66 * dz
+    return A
+
+
+def assemble_B_matrix(
+    layers: list[LayerSpec],
+    z_coords: list[tuple[float, float]],
+    grid_shape: tuple[int, int],
+    library: dict[str, PhysicsProps],
+) -> NDArray:
+    """Bending-extension coupling: B_ij = Σ_k Q_ij_k · (z_top²−z_bot²)/2  [Pa·m²=N]."""
+    NY, NX = grid_shape
+    B = np.zeros((NY, NX, 3, 3), dtype=np.float64)
+    active = [l for l in layers if l.row_class != "ignore"]
+    for layer, (z_bot, z_top) in zip(active, z_coords):
+        if layer.E_pa is None:
+            continue
+        Ex_eff, Ey_eff, nu_eff, _, _ = compute_effective_properties(layer, grid_shape, library)
+        Q11, Q12, Q22, Q66 = _q_matrix(Ex_eff, Ey_eff, nu_eff)
+        dz2 = (z_top ** 2 - z_bot ** 2) / 2.0
+        B[..., 0, 0] += Q11 * dz2
+        B[..., 0, 1] += Q12 * dz2
+        B[..., 1, 0] += Q12 * dz2
+        B[..., 1, 1] += Q22 * dz2
+        B[..., 2, 2] += Q66 * dz2
+    return B
+
+
 # ---------------------------------------------------------------------------
 # Step 7 — compute_thermal_moments
 # ---------------------------------------------------------------------------
@@ -546,72 +594,85 @@ def compute_thermal_moments(
     return MT
 
 
+def compute_thermal_forces(
+    layers: list[LayerSpec],
+    z_coords: list[tuple[float, float]],
+    delta_T_map: dict[str, float],
+    grid_shape: tuple[int, int],
+    library: dict[str, PhysicsProps],
+) -> NDArray:
+    """Thermal in-plane force resultant: N_T_i = Σ_k (Q·α)_i · ΔT_k · Δz_k  [N/m]."""
+    NY, NX = grid_shape
+    NT = np.zeros((NY, NX, 3), dtype=np.float64)
+    active = [l for l in layers if l.row_class != "ignore"]
+    for layer, (z_bot, z_top) in zip(active, z_coords):
+        if layer.E_pa is None:
+            continue
+        dT = delta_T_map.get("prepreg" if layer.row_class == "prepreg" else "core", 0.0)
+        cure_eps = -layer.cure_shrinkage if layer.row_class == "prepreg" else 0.0
+        if dT == 0.0 and cure_eps == 0.0:
+            continue
+        Ex_eff, Ey_eff, nu_eff, alpha_x_eff, alpha_y_eff = compute_effective_properties(
+            layer, grid_shape, library
+        )
+        Q11, Q12, Q22, _ = _q_matrix(Ex_eff, Ey_eff, nu_eff)
+        dz = z_top - z_bot
+        if dT != 0.0:
+            NT[..., 0] += (Q11 * alpha_x_eff + Q12 * alpha_y_eff) * dT * dz
+            NT[..., 1] += (Q12 * alpha_x_eff + Q22 * alpha_y_eff) * dT * dz
+        if cure_eps != 0.0:
+            NT[..., 0] += (Q11 + Q12) * cure_eps * dz
+            NT[..., 1] += (Q12 + Q22) * cure_eps * dz
+    return NT
+
+
 # ---------------------------------------------------------------------------
 # Step 8 — solve_curvature
 # ---------------------------------------------------------------------------
 
 def solve_curvature(
+    A: NDArray,
+    B: NDArray,
     D: NDArray,
     MT: NDArray,
-    layers: list[LayerSpec],
-    z_coords: list[tuple[float, float]],
-    grid_shape: tuple[int, int],
-    library: dict[str, PhysicsProps],
+    NT: NDArray,
 ) -> tuple[NDArray, NDArray, bool]:
-    """
-    Compute the curvature field by inverting D at every grid cell.
+    """Full ABD curvature solve for a free asymmetric laminate under thermal load.
 
-    κ(x, y) = D⁻¹(x, y) · MT(x, y)
+    For a free plate (no in-plane constraints) the coupled CLT equations give:
 
-    Also computes the B-matrix (bending-extension coupling) as a diagnostic.
-    A non-zero B means the simple D⁻¹·MT solution is approximate; a warning
-    is logged and flagged in the return value when ||B||_F / ||D||_F > 0.05.
+        κ = (D − B·A⁻¹·B)⁻¹ · (M_T − B·A⁻¹·N_T)
+
+    This is the Schur-complement form of the full ABD system. It collapses to
+    D⁻¹·M_T only when B = 0 (symmetric laminate). Using it here eliminates the
+    "Curvature prediction may be underestimated" warning for asymmetric PCBs.
 
     Args:
-        D:          Bending stiffness (NY, NX, 3, 3) from assemble_D_matrix().
-        MT:         Thermal moments (NY, NX, 3) from compute_thermal_moments().
-        layers:     Active LayerSpec list (for B-matrix computation).
-        z_coords:   (z_bot, z_top) from compute_z_coordinates().
-        grid_shape: (NY, NX).
-        library:    Dict of PhysicsProps.
+        A:  In-plane stiffness        (NY, NX, 3, 3)  [Pa·m]
+        B:  Bending-extension coupling(NY, NX, 3, 3)  [Pa·m²]
+        D:  Bending stiffness         (NY, NX, 3, 3)  [Pa·m³]
+        MT: Thermal bending moments   (NY, NX, 3)     [N·m/m]
+        NT: Thermal in-plane forces   (NY, NX, 3)     [N/m]
 
     Returns:
-        Tuple (kappa_x, kappa_y, b_matrix_warning):
-            kappa_x / kappa_y — curvature arrays (NY, NX) [1/m].
-            b_matrix_warning  — True if B asymmetry was significant.
+        (kappa_x, kappa_y, b_warning) — curvatures [1/m] and asymmetry flag.
     """
-    # Invert D at every grid cell (np.linalg.inv operates on last two dims)
-    D_inv = np.linalg.inv(D)
-    kappa = np.einsum("...ij,...j->...i", D_inv, MT)  # (NY, NX, 3)
+    NY, NX = A.shape[:2]
+
+    A_inv   = np.linalg.inv(A)                                     # (NY,NX,3,3)
+    B_Ainv  = np.einsum("...ij,...jk->...ik", B, A_inv)            # (NY,NX,3,3)
+    D_star  = D - np.einsum("...ij,...jk->...ik", B_Ainv, B)       # (NY,NX,3,3)
+    rhs     = MT - np.einsum("...ij,...j->...i",  B_Ainv, NT)      # (NY,NX,3)
+    kappa   = np.einsum("...ij,...j->...i", np.linalg.inv(D_star), rhs)
+
     kappa_x = kappa[..., 0]
     kappa_y = kappa[..., 1]
 
-    # B-matrix diagnostic — B = Σ Q · (z_top² − z_bot²) / 2
-    NY, NX = grid_shape
-    B = np.zeros((NY, NX, 3, 3), dtype=np.float64)
-    active = [l for l in layers if l.row_class != "ignore"]
-    for layer, (z_bot, z_top) in zip(active, z_coords):
-        if layer.E_pa is None:
-            continue
-        Ex_eff, Ey_eff, nu_eff, _, _ = compute_effective_properties(layer, grid_shape, library)
-        Q11, Q12, Q22, Q66 = _q_matrix(Ex_eff, Ey_eff, nu_eff)
-        dz2 = (z_top ** 2 - z_bot ** 2) / 2.0
-        B[..., 0, 0] += Q11 * dz2
-        B[..., 0, 1] += Q12 * dz2
-        B[..., 1, 0] += Q12 * dz2
-        B[..., 1, 1] += Q22 * dz2
-        B[..., 2, 2] += Q66 * dz2
-
-    b_norm = np.mean(np.linalg.norm(B.reshape(NY, NX, 9), axis=-1))
-    d_norm = np.mean(np.linalg.norm(D.reshape(NY, NX, 9), axis=-1))
-    ratio = b_norm / (d_norm + 1e-30)
-    b_warning = ratio > _B_WARNING_THRESHOLD
+    b_norm    = np.mean(np.linalg.norm(B.reshape(NY, NX, 9), axis=-1))
+    d_norm    = np.mean(np.linalg.norm(D.reshape(NY, NX, 9), axis=-1))
+    b_warning = (b_norm / (d_norm + 1e-30)) > _B_WARNING_THRESHOLD
     if b_warning:
-        logger.warning(
-            "B-matrix asymmetry is significant (||B||/||D|| = %.3f > %.2f). "
-            "Curvature prediction may be underestimated.",
-            ratio, _B_WARNING_THRESHOLD,
-        )
+        logger.debug("B/D ratio %.3f — full ABD solve applied.", b_norm / (d_norm + 1e-30))
 
     return kappa_x, kappa_y, b_warning
 
@@ -748,18 +809,17 @@ def run_simulation(
     # Step 4 — z-coordinates
     z_coords = compute_z_coordinates(layers)
 
-    # Step 5–6 — assemble D
-    D = assemble_D_matrix(layers, z_coords, grid_shape, library)
+    # Step 5–6 — assemble ABD matrices
+    A  = assemble_A_matrix(layers, z_coords, grid_shape, library)
+    B  = assemble_B_matrix(layers, z_coords, grid_shape, library)
+    D  = assemble_D_matrix(layers, z_coords, grid_shape, library)
 
-    # Step 7 — thermal moments
-    MT = compute_thermal_moments(
-        layers, z_coords, delta_T_map, grid_shape, library
-    )
+    # Step 7 — thermal loads
+    MT = compute_thermal_moments(layers, z_coords, delta_T_map, grid_shape, library)
+    NT = compute_thermal_forces( layers, z_coords, delta_T_map, grid_shape, library)
 
-    # Step 8 — solve curvature
-    kappa_x, kappa_y, b_warning = solve_curvature(
-        D, MT, layers, z_coords, grid_shape, library
-    )
+    # Step 8 — full ABD curvature solve
+    kappa_x, kappa_y, b_warning = solve_curvature(A, B, D, MT, NT)
 
     # Step 9 — reconstruct displacement
     w_mm = reconstruct_displacement(kappa_x, kappa_y, bw, bh)

@@ -1,0 +1,307 @@
+{
+  "version": 2,
+  "material_set": "IT988",
+  "stackup": [
+    {
+      "row_type": "copper",
+      "layer_number": 1,
+      "material": "foil + plating 1.0",
+      "finish_thickness_mil": 1.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 2,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l2_plane_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 3,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l3_signal_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 4,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l4_plane_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 5,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l5_signal_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 6,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l6_plane_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 7,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l7_signal_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 8,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l8_plane_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 9,
+      "material": "2 oz",
+      "finish_thickness_mil": 2.8,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l9_plane_2oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 10,
+      "material": "2 oz",
+      "finish_thickness_mil": 2.8,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l10_plane_2oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 11,
+      "material": "2 oz",
+      "finish_thickness_mil": 2.8,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l11_plane_2oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 12,
+      "material": "2 oz",
+      "finish_thickness_mil": 2.8,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l12_plane_2oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 13,
+      "material": "2 oz",
+      "finish_thickness_mil": 2.8,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l13_plane_2oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 14,
+      "material": "2 oz",
+      "finish_thickness_mil": 2.8,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l14_plane_2oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 15,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l15_plane_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 16,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l16_signal_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 17,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l17_plane_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 18,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l18_signal_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 19,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l19_plane_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 20,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l20_signal_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Core",
+      "finish_thickness_mil": 12.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 21,
+      "material": "1 oz",
+      "finish_thickness_mil": 1.4,
+      "gerber_path": "c:\\Users\\Asa Guest\\Documents\\Projects\\CopperBalancingApplication\\assets\\gerbers\\Q1\\l21_plane_1oz_Q1.gbr"
+    },
+    {
+      "row_type": "dielectric",
+      "layer_number": null,
+      "material": "IT988 Prepreg",
+      "finish_thickness_mil": 3.0,
+      "gerber_path": null
+    },
+    {
+      "row_type": "copper",
+      "layer_number": 22,
+      "material": "foil + plating 1.0",
+      "finish_thickness_mil": 1.0,
+      "gerber_path": null
+    }
+  ]
+}

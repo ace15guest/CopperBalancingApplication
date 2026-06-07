@@ -88,13 +88,29 @@ def compare_gradient_fields(
     angle_diff = np.degrees(np.arccos(cos_theta))
     mag_ratio = mag_r / (mag_m + eps)
 
-    angle_flat = angle_diff.ravel()
-    ratio_flat = mag_ratio.ravel()
+    # Exclude near-flat pixels from angle statistics: when either gradient
+    # magnitude is tiny, dot / (mag_m * mag_r + eps) collapses to ~0 and
+    # arccos forces 90° regardless of the true relationship.  Use a threshold
+    # of 1% of each field's 95th-percentile magnitude so the cutoff is
+    # relative to the actual slope scale of the board.
+    thresh_m = float(np.percentile(mag_m, 95)) * 0.10
+    thresh_r = float(np.percentile(mag_r, 95)) * 0.10
+    active = (mag_m > thresh_m) & (mag_r > thresh_r)
+
+    angle_active = angle_diff[active]
+    ratio_flat   = mag_ratio.ravel()
+
+    if angle_active.size == 0:
+        angle_mean = angle_median = angle_p95 = float("nan")
+    else:
+        angle_mean   = float(np.mean(angle_active))
+        angle_median = float(np.median(angle_active))
+        angle_p95    = float(np.percentile(angle_active, 95))
 
     metrics: dict[str, float] = {
-        "angle_mean_deg":    float(np.mean(angle_flat)),
-        "angle_median_deg":  float(np.median(angle_flat)),
-        "angle_p95_deg":     float(np.percentile(angle_flat, 95)),
+        "angle_mean_deg":    angle_mean,
+        "angle_median_deg":  angle_median,
+        "angle_p95_deg":     angle_p95,
         "mag_ratio_mean":    float(np.mean(ratio_flat)),
         "mag_ratio_median":  float(np.median(ratio_flat)),
         "mag_ratio_p05":     float(np.percentile(ratio_flat, 5)),
@@ -107,6 +123,7 @@ def gradient_analysis(
     sim: SimResult,
     measurement: MeasurementData,
     method: str = "finite",
+    smooth_sigma: float = 3.0,
 ) -> tuple[GradientMetrics, NDArray, NDArray]:
     """High-level wrapper: compare gradients of sim vs measurement.
 
@@ -114,18 +131,29 @@ def gradient_analysis(
     aligned via ``alignment.align``).  If shapes differ, measurement is
     bilinearly resampled to match sim before computing gradients.
 
+    smooth_sigma applies a Gaussian blur to both fields before computing
+    gradients, so the angle comparison reflects slope direction at a
+    meaningful spatial scale (~3σ pixels) rather than pixel-level noise.
+    At 50 DPI, sigma=3 corresponds to ~1.5 mm — appropriate for PCB warpage.
+
     Returns
     -------
     metrics : GradientMetrics
     angle_diff : 2D ndarray  — degrees, same shape as sim
     mag_ratio  : 2D ndarray  — unitless, same shape as sim
     """
+    from scipy.ndimage import gaussian_filter
+
     s = sim.displacement
     m = _resample(sim, measurement)
 
     valid = np.isfinite(s) & np.isfinite(m)
     s_clean = np.where(valid, s, 0.0)
     m_clean = np.where(valid, m, 0.0)
+
+    if smooth_sigma > 0:
+        s_clean = gaussian_filter(s_clean.astype(np.float64), sigma=smooth_sigma)
+        m_clean = gaussian_filter(m_clean.astype(np.float64), sigma=smooth_sigma)
 
     gxs, gys = compute_gradients(s_clean, method=method)
     gxm, gym = compute_gradients(m_clean, method=method)

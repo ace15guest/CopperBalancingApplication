@@ -11,7 +11,8 @@
       "Bash(.venv/Scripts/python -c ' *)",
       "Bash(.venv/Scripts/python -m src.simulation.validation)",
       "Bash(python -c ' *)",
-      "Bash(.venv\\\\Scripts\\\\pip install *)"
+      "Bash(.venv\\\\Scripts\\\\pip install *)",
+      "Bash(git add *)"
     ]
   }
 }

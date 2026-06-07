@@ -134,6 +134,7 @@ def physics_name_for(material: str) -> str:
     if material in STACKUP_TO_PHYSICS:
         return STACKUP_TO_PHYSICS[material]
     if material.endswith(" Core") or material.endswith(" Prepreg"):
-        # Dynamic material: "890K Core" → "890K", "IT988 Prepreg" → "IT988"
-        return material.rsplit(" ", 1)[0]
+        # Return the full name so Core and Prepreg can have different properties.
+        # e.g. "890K Core" → "890K Core",  "IT988 Prepreg" → "IT988 Prepreg"
+        return material
     return "Copper"
